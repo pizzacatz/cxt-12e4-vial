@@ -1,0 +1,5 @@
+# Allow local desktop users to configure the CXT 12E4 through Vial Web.
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="5754", ATTRS{idProduct}=="c401", MODE="0660", GROUP="plugdev", TAG+="uaccess", RUN{builtin}+="uaccess"
+
+# Allow future ATmega32U4 DFU firmware updates without running the flasher as root.
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="03eb", ATTRS{idProduct}=="2ff4", MODE="0660", GROUP="plugdev", TAG+="uaccess"
