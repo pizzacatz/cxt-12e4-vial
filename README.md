@@ -18,7 +18,7 @@ The firmware has been built, flashed, read back, and validated on physical CXT-1
 - Dynamic layers: 6
 - Macro slots: 6
 - Approximate macro storage: 695 bytes shared across the six slots
-- Firmware size: 18,416 of 28,672 application bytes (64%)
+- Firmware size: 18,636 of 28,672 application bytes (64%)
 - Tested Vial-QMK base: `dd43959ae5c08d8a28d38a1acf7b04e86b14a344`
 
 The tested firmware is attached to the GitHub release as `cxt_studio_12e4_vial.hex`.
@@ -26,7 +26,7 @@ The tested firmware is attached to the GitHub release as `cxt_studio_12e4_vial.h
 SHA-256:
 
 ```text
-1e46a4cad5f5a0c947f969c0cbaf8f8ed15dc54ed8cbfcae42c161fb4d0aa6c0
+1e95f1875a235bf4926da9c50bbe483f78451d770301525eabd97ad7132158eb
 ```
 
 ## Physical control layout
@@ -56,6 +56,21 @@ Default encoder mappings on layer 0:
 
 Layers 1–5 start transparent and can be configured in Vial.
 
+## Layer colors
+
+All twelve LEDs identify the highest active layer:
+
+| Layer | Color |
+| ---: | --- |
+| 0 | Off |
+| 1 | Red |
+| 2 | Orange |
+| 3 | Green |
+| 4 | Blue |
+| 5 | Purple |
+
+Momentary layers revert to the previous color when released; toggled layers retain their color. VialRGB brightness and on/off control still apply. Because the layer indicator deliberately paints all LEDs after the normal RGB effect, Vial hue and animation changes do not visibly override this compiled palette.
+
 ## Vial security unlock
 
 Sensitive Vial actions require a physical unlock chord. Hold the first and fourth encoder buttons simultaneously: the bottom volume knob and the top-right RGB-mode knob.
@@ -67,7 +82,7 @@ The directory below is an overlay for a Vial-QMK checkout:
 ```text
 keyboards/cxt_studio/12e4/keymaps/vial/
 ├── config.h   # UID, 6/6 EEPROM allocation, unlock chord, RGB trimming
-├── keymap.c   # Default keymap and six-layer encoder map
+├── keymap.c   # Default keymap, encoder map, and per-layer RGB colors
 ├── rules.mk   # Vial/VialRGB features and size-saving build options
 └── vial.json  # Embedded Vial definition and physical Y layout
 ```
@@ -145,12 +160,13 @@ The work proceeded as follows:
 8. Vial represents each direction with a separate round widget. The controls were grouped as `[CCW] [press] [CW]` and arranged to match the physical Y formation.
 9. Physical encoder positions were verified and reordered: brightness at top left, RGB mode at top right, hue in the center, and volume at the bottom.
 10. The EEPROM allocation was changed from four layers and sixteen macro slots to six layers and six macro slots. The Vial build ID changed, causing firmware to initialize the new EEPROM layout safely.
+11. A final RGB Matrix indicator was added so the highest active layer controls all twelve LEDs. Layer 0 is intentionally dark; layers 1–5 use red, orange, green, blue, and purple while preserving the VialRGB brightness setting.
 
 ## Deliberately omitted features
 
 To remain comfortably inside the ATmega32U4 application region, this build disables canned reactive RGB animations, tap dance, combos, key overrides, mouse keys, NKRO, QMK settings, console, command mode, Caps Word, Layer Lock, Repeat Key, Auto Shift, Space Cadet, Grave Escape, and Magic key handling.
 
-Vial key mapping, six layers, six macros, all four configurable encoders, media keys, the encoder presses, and direct VialRGB control remain enabled.
+Vial key mapping, six layers, six macros, all four configurable encoders, media keys, the encoder presses, VialRGB brightness, and RGB on/off control remain enabled.
 
 ## License
 
