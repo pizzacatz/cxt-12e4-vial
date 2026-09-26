@@ -18,15 +18,15 @@ The firmware has been built, flashed, read back, and validated on physical CXT-1
 - Dynamic layers: 6
 - Macro slots: 6
 - Approximate macro storage: 695 bytes shared across the six slots
-- Firmware size: 18,636 of 28,672 application bytes (64%)
+- Firmware size: 18,672 of 28,672 application bytes (65%)
 - Tested Vial-QMK base: `dd43959ae5c08d8a28d38a1acf7b04e86b14a344`
 
-The tested firmware is attached to the GitHub release as `cxt_studio_12e4_vial.hex`.
+The current firmware is included in this repository as [`firmware/cxt_studio_12e4_vial.hex`](firmware/cxt_studio_12e4_vial.hex). Older builds are attached to the GitHub releases.
 
 SHA-256:
 
 ```text
-1e95f1875a235bf4926da9c50bbe483f78451d770301525eabd97ad7132158eb
+4bb34a2849e0a07d00e6430e62c5b1b5de7810c1810ea0a1c11b34b946fceff9
 ```
 
 ## Physical control layout
@@ -161,6 +161,7 @@ The work proceeded as follows:
 9. Physical encoder positions were verified and reordered: brightness at top left, RGB mode at top right, hue in the center, and volume at the bottom.
 10. The EEPROM allocation was changed from four layers and sixteen macro slots to six layers and six macro slots. The Vial build ID changed, causing firmware to initialize the new EEPROM layout safely.
 11. A final RGB Matrix indicator was added so the highest active layer controls all twelve LEDs. Layer 0 is intentionally dark; layers 1–5 use red, orange, green, blue, and purple while preserving the VialRGB brightness setting.
+12. The large bottom encoder emits two quadrature pulses per detent, so at the default resolution it registered only every other detent. `ENCODER_RESOLUTIONS` sets it to 2 while the three small encoders stay at 4.
 
 ## Deliberately omitted features
 

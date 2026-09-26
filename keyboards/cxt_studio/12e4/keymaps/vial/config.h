@@ -7,6 +7,9 @@
 #define DYNAMIC_KEYMAP_LAYER_COUNT 6
 #define DYNAMIC_KEYMAP_MACRO_COUNT 6
 
+/* The large bottom encoder emits two quadrature pulses per detent. */
+#define ENCODER_RESOLUTIONS {2, 4, 4, 4}
+
 /* Hold the first and fourth encoder buttons to unlock sensitive Vial actions. */
 #define VIAL_UNLOCK_COMBO_ROWS {3, 3}
 #define VIAL_UNLOCK_COMBO_COLS {0, 3}

@@ -3,6 +3,7 @@
 *.eep
 *.elf
 *.hex
+!firmware/*.hex
 *.map
 
 # Editor and operating-system files
