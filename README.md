@@ -18,7 +18,7 @@ The firmware has been built, flashed, read back, and validated on physical CXT-1
 - Dynamic layers: 6
 - Macro slots: 6
 - Approximate macro storage: 695 bytes shared across the six slots
-- Firmware size: 18,672 of 28,672 application bytes (65%)
+- Firmware size: 19,880 of 28,672 application bytes (69%)
 - Tested Vial-QMK base: `dd43959ae5c08d8a28d38a1acf7b04e86b14a344`
 
 The current firmware is included in this repository as [`firmware/cxt_studio_12e4_vial.hex`](firmware/cxt_studio_12e4_vial.hex). Older builds are attached to the GitHub releases.
@@ -26,7 +26,7 @@ The current firmware is included in this repository as [`firmware/cxt_studio_12e
 SHA-256:
 
 ```text
-4bb34a2849e0a07d00e6430e62c5b1b5de7810c1810ea0a1c11b34b946fceff9
+8af5f783a3128e43704bc463d11681a602a2328edccf7472cdc06ff3347b44dc
 ```
 
 ## Physical control layout
@@ -105,6 +105,8 @@ SKIP_FLASHING_SUPPORT=1 ./util/docker_build.sh cxt_studio/12e4:vial
 
 The resulting file is `cxt_studio_12e4_vial.hex` in the Vial-QMK root.
 
+Each build gets a random Vial build ID, and flashing a build with a different ID resets the keymap, macros, encoder maps, and RGB settings saved in EEPROM to the defaults in `keymap.c`. To keep saved settings when the EEPROM layout is unchanged, reuse the committed firmware's ID `0x00232140` by editing `util/build_id.py` to print that value before building.
+
 ## Linux permissions
 
 Install the included rule once:
@@ -162,12 +164,13 @@ The work proceeded as follows:
 10. The EEPROM allocation was changed from four layers and sixteen macro slots to six layers and six macro slots. The Vial build ID changed, causing firmware to initialize the new EEPROM layout safely.
 11. A final RGB Matrix indicator was added so the highest active layer controls all twelve LEDs. Layer 0 is intentionally dark; layers 1–5 use red, orange, green, blue, and purple while preserving the VialRGB brightness setting.
 12. The large bottom encoder emits two quadrature pulses per detent, so at the default resolution it registered only every other detent. `ENCODER_RESOLUTIONS` sets it to 2 while the three small encoders stay at 4.
+13. Mouse keys were enabled, adding 1,208 bytes. The build reused the previous Vial build ID because mouse keys do not change the EEPROM layout, so saved Vial settings survived the update.
 
 ## Deliberately omitted features
 
-To remain comfortably inside the ATmega32U4 application region, this build disables canned reactive RGB animations, tap dance, combos, key overrides, mouse keys, NKRO, QMK settings, console, command mode, Caps Word, Layer Lock, Repeat Key, Auto Shift, Space Cadet, Grave Escape, and Magic key handling.
+To remain comfortably inside the ATmega32U4 application region, this build disables canned reactive RGB animations, tap dance, combos, key overrides, NKRO, QMK settings, console, command mode, Caps Word, Layer Lock, Repeat Key, Auto Shift, Space Cadet, Grave Escape, and Magic key handling.
 
-Vial key mapping, six layers, six macros, all four configurable encoders, media keys, the encoder presses, VialRGB brightness, and RGB on/off control remain enabled.
+Vial key mapping, six layers, six macros, all four configurable encoders, media keys, mouse keys, the encoder presses, VialRGB brightness, and RGB on/off control remain enabled.
 
 ## License
 

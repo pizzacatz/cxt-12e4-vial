@@ -4,10 +4,10 @@ VIALRGB_ENABLE = yes
 ENCODER_MAP_ENABLE = yes
 LTO_ENABLE = yes
 
-# Keep the ATmega32U4 build small while retaining media keys and Vial features.
+# Keep the ATmega32U4 build small while retaining media keys, mouse keys, and Vial features.
 CONSOLE_ENABLE = no
 COMMAND_ENABLE = no
-MOUSEKEY_ENABLE = no
+MOUSEKEY_ENABLE = yes
 NKRO_ENABLE = no
 CAPS_WORD_ENABLE = no
 LAYER_LOCK_ENABLE = no
